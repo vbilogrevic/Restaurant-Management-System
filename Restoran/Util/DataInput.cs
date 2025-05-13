@@ -45,8 +45,18 @@ namespace Restoran.Util
             {
                 Console.WriteLine($"{j + 1}. {categories[j].Name}, {categories[j].Description}");
             }
-            int index = InvalidInput.ValidatePositiveInteger("Odaberite kategoriju: ", 
+
+
+            int index;
+            do
+            {
+                index = InvalidInput.ValidatePositiveInteger("Odaberite kategoriju: ",
                 Messages.INVALID_INT_INPUT_AND_NEGATIVE_ERROR) - 1;
+                if (index < 0 || index > categories.Count)
+                {
+                    Console.WriteLine("Unijeli ste neispravnu vrijednost!");
+                }
+            } while (index < 0 || index > categories.Count);
             tempCategory = categories[index];
 
             decimal kcal = InvalidInput.ValidatePositiveDecimal("Kalorije: ", 
@@ -95,8 +105,17 @@ namespace Restoran.Util
             {
                 Console.WriteLine($"{j + 1}. {categories[j].Name}, {categories[j].Description}");
             }
-            int index = InvalidInput.ValidatePositiveInteger("Odaberite kategoriju: ", 
+
+            int index;
+            do
+            {
+                index = InvalidInput.ValidatePositiveInteger("Odaberite kategoriju: ",
                 Messages.INVALID_INT_INPUT_AND_NEGATIVE_ERROR) - 1;
+                if (index < 0 || index > categories.Count)
+                {
+                    Console.WriteLine("Unijeli ste neispravnu vrijednost!");
+                }
+            } while (index < 0 || index > categories.Count);
             tempCategory = categories[index];
 
             Console.WriteLine("Namirnice");
@@ -104,13 +123,26 @@ namespace Restoran.Util
             {
                 Console.WriteLine($"{j + 1}. {ingredients[j].Name}");
             }
+
             int numberOfIngredients = InvalidInput.ValidatePositiveInteger("Koliko sastojaka želite odabrati: ", 
                 Messages.INVALID_INT_INPUT_AND_NEGATIVE_ERROR);
+
             List<Ingredient> tempIngredients = new List<Ingredient>();
+
             for (int j = 0; j < numberOfIngredients; j++)
             {
-                int indexIngredient = InvalidInput.ValidatePositiveInteger($"Unesite {j + 1}. sastojak: ", 
+                int indexIngredient;
+
+                do
+                {
+                    indexIngredient = InvalidInput.ValidatePositiveInteger($"Unesite {j + 1}. sastojak: ",
                     Messages.INVALID_INT_INPUT_AND_NEGATIVE_ERROR) - 1;
+                    if(indexIngredient < 0 || indexIngredient > ingredients.Count)
+                    {
+                        Console.WriteLine("Unijeli ste neispravnu vrijednost!");
+                    }
+                } while (indexIngredient < 0 || indexIngredient > ingredients.Count);
+
                 tempIngredients.Add(ingredients[indexIngredient]);
             }
 
@@ -211,13 +243,42 @@ namespace Restoran.Util
                 }
             }
 
-            Console.Write("Datum početka rada (dd.MM.yyyy): ");
-            string startDateString = Console.ReadLine();
-            DateTime startDate = DateTime.ParseExact(startDateString, "dd.MM.yyyy", null);
 
-            Console.Write("Datum završetka rada (dd.MM.yyyy): ");
-            string endDateString = Console.ReadLine();
-            DateTime endDate = DateTime.ParseExact(endDateString, "dd.MM.yyyy", null);
+            string startDateString, endDateString;
+
+            DateTime startDate;
+            while (true)
+            {
+                Console.Write("Datum početka rada (dd.MM.yyyy): ");
+                startDateString = Console.ReadLine();
+
+                if (DateTime.TryParseExact(startDateString, "dd.MM.yyyy", null,
+                     System.Globalization.DateTimeStyles.None, out startDate))
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Neispravan format datuma. Pokušajte ponovo (format: dd.MM.yyyy)");
+                }
+            }
+
+            DateTime endDate;
+            while (true)
+            {
+                Console.Write("Datum početka rada (dd.MM.yyyy): ");
+                endDateString = Console.ReadLine();
+
+                if (DateTime.TryParseExact(endDateString, "dd.MM.yyyy", null,
+                     System.Globalization.DateTimeStyles.None, out endDate))
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Neispravan format datuma. Pokušajte ponovo (format: dd.MM.yyyy)");
+                }
+            }
 
             int typeOfContract;
             do
@@ -294,11 +355,24 @@ namespace Restoran.Util
             }
             int numberOfMeals = InvalidInput.ValidatePositiveInteger("Koliko jela želite odabrati: ", 
                 Messages.INVALID_INT_INPUT_AND_NEGATIVE_ERROR);
+
             List<Meal> tempMeals = new List<Meal>();
+
             for (int j = 0; j < numberOfMeals; j++)
             {
-                int indexMeal = InvalidInput.ValidatePositiveInteger($"Unesite {j + 1}. jelo: ", 
+                int indexMeal;
+
+                do
+                {
+                    indexMeal = InvalidInput.ValidatePositiveInteger($"Unesite {j + 1}. jelo: ",
                     Messages.INVALID_INT_INPUT_AND_NEGATIVE_ERROR) - 1;
+
+                    if(indexMeal < 0 || indexMeal > meals.Count)
+                    {
+                        Console.WriteLine("Unijeli ste neispravnu vrijednost!");
+                    }
+                } while (indexMeal < 0 || indexMeal > meals.Count);
+
                 tempMeals.Add(meals[indexMeal]);
             }
 
@@ -312,11 +386,14 @@ namespace Restoran.Util
             }
             int numberOfChefs = InvalidInput.ValidatePositiveInteger("Koliko kuhara želite odabrati: ", 
                 Messages.INVALID_INT_INPUT_AND_NEGATIVE_ERROR);
+
             List<Chef> tempChefs = new List<Chef>();
+
             for (int j = 0; j < numberOfChefs; j++)
             {
                 int indexChef = InvalidInput.ValidatePositiveInteger($"Unesite {j + 1}. kuhara: ",
                     Messages.INVALID_INT_INPUT_AND_NEGATIVE_ERROR) - 1;
+
                 tempChefs.Add((Chef)employees[indexChef]);
             }
 
@@ -366,9 +443,21 @@ namespace Restoran.Util
             {
                 Console.WriteLine($"{j + 1}. {restaurants[j].Name}");
             }
-            int restaurantIndex = InvalidInput.ValidatePositiveInteger("Odaberite restoran: ", 
+            int restaurantIndex;
+
+            do
+            {
+                restaurantIndex = InvalidInput.ValidatePositiveInteger("Odaberite restoran: ",
                 Messages.INVALID_INT_INPUT_AND_NEGATIVE_ERROR) - 1;
+
+                if (restaurantIndex < 0 || restaurantIndex > restaurants.Count)
+                {
+                    Console.WriteLine("Unijeli ste neispravnu vrijednost!");
+                }
+
+            } while (restaurantIndex < 0 || restaurantIndex > restaurants.Count);
             Restaurant tempRestaurant = restaurants[restaurantIndex];
+
 
             Console.WriteLine("Jela");
             for (int j = 0; j < tempRestaurant.Meals.Count; j++)
@@ -377,11 +466,25 @@ namespace Restoran.Util
             }
             int numberOfMeals = InvalidInput.ValidatePositiveInteger("Koliko jela želite naručiti: ", 
                 Messages.INVALID_INT_INPUT_AND_NEGATIVE_ERROR);
+
             List<Meal> tempMeals = new List<Meal>();
+
             for (int j = 0; j < numberOfMeals; j++)
             {
-                int mealIndex = InvalidInput.ValidatePositiveInteger($"Unesite {j + 1}. jelo: ",
+                int mealIndex;
+
+                do
+                {
+                    mealIndex = InvalidInput.ValidatePositiveInteger($"Unesite {j + 1}. jelo: ",
                     Messages.INVALID_INT_INPUT_AND_NEGATIVE_ERROR) - 1;
+
+                    if(mealIndex < 0 || mealIndex > tempRestaurant.Meals.Count)
+                    {
+                        Console.WriteLine("Unijeli ste neispravnu vrijednost!");
+                    }
+
+                } while (mealIndex < 0 || mealIndex > tempRestaurant.Meals.Count);
+
                 tempMeals.Add(tempRestaurant.Meals[mealIndex]);
             }
 

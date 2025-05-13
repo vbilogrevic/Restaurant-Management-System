@@ -61,7 +61,9 @@ internal class Program
             orders.Add(order);
         }
 
-        var restaurantWithMostEmployees = restaurants.OrderByDescending(r => r.Chefs.Count + r.Waiters.Count + r.Deliverers.Count).FirstOrDefault();
+        var restaurantWithMostEmployees = 
+            restaurants.OrderByDescending(r => r.Chefs.Count + r.Waiters.Count + r.Deliverers.Count)
+            .FirstOrDefault();
         Console.WriteLine($"Restoran s najviše zaposlenika je {restaurantWithMostEmployees.Name}");
 
         FindMostExpensiveOrder(orders);
